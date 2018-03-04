@@ -43,9 +43,6 @@ public class Board extends State<Board>{
   //override
   protected void evaluate(){
 
-
-
-
     if(!endState()){
       heuristic();
     }
@@ -170,7 +167,7 @@ public class Board extends State<Board>{
   public void printBoard(){
     for(int i =0; i < DIM; i++){
       for(int j = 0; j < DIM; j++){
-        System.out.print(values[i][j] + " ");
+        System.out.printf("%2d ",values[i][j]);
       }
       System.out.println();
     }

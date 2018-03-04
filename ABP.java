@@ -22,7 +22,10 @@ public class ABP{
   public Board run(double alpha, double beta,long endTime){
     //is the initial Board a finished state? if so break and return the state
     //the utility value would have already been set to +- infinity
+    System.out.println("Depth : "+depth);
     if(initial.isFinishedState()){
+      System.out.println("Finished State Reached : " +initial.getUtilityValue());
+      initial.printBoard();
       return initial;
     }
     //the state is a regular state
