@@ -19,6 +19,7 @@ public class main{
     Board res = a.initialRun(5);
     int[] move = res.getMove();
     res.printBoard();
+    System.out.println(move[0] + ","+ move[1]);
 
 
 
