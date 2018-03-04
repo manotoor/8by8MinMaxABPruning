@@ -85,7 +85,7 @@ public class ABP{
           if(value < bestVal){
             bestVal = value;
             bestState = res;
-            bestMove = res.getMove();
+            bestMove = c.getMove();
           }
           // Prune branches that do not lead to better choices
           if (value <= alpha) {
