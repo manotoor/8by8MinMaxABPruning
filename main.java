@@ -19,7 +19,7 @@ public class main{
     //b.getChildren(true);
 
 
-    ABP a = new ABP(b, 5, true);
+    ABP a = new ABP(b, 3, true);
     Board res = a.initialRun(20);
     int[] move = res.getMove();
     res.printBoard();

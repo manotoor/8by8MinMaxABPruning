@@ -15,7 +15,7 @@ public class ABP{
 
   //calls this to start alpha beta pruning
   public Board initialRun(long time){
-    return run(Double.MAX_VALUE,-Double.MAX_VALUE,System.currentTimeMillis() + (time*1000));
+    return run(-Double.MAX_VALUE,Double.MAX_VALUE,System.currentTimeMillis() + (time*1000));
   }
 
   //requires alpha, beta, and end time
@@ -60,9 +60,16 @@ public class ABP{
           }
           // set alpha to whatever variable is larger
           // between alpha max
-          alpha = Math.max(alpha, value);
+          if(alpha >= value)
+            alpha = alpha;
+          if(value >= alpha)
+            alpha = value;
           // pruning, do not continue
            if (beta <= alpha) {
+            c.printBoard();
+            System.out.println("Alpha: " + alpha);
+            System.out.println("Beta: " + beta);
+            System.out.println("Value: " + value);
             break;
           }
 
@@ -86,11 +93,15 @@ public class ABP{
             bestVal = value;
             bestState = c;
           }
-          beta = Math.min(beta, value);
-          // Prune branches that do not lead to better choices
-          if (beta <= alpha) {
-            break;
-          }
+          if(beta <= value)
+            beta = beta;
+          if(value <= beta)
+            beta = value;
+          // beta = Math.min(beta, value);
+//           // Prune branches that do not lead to better choices
+           if (beta <= alpha) {
+             break;
+           }
 
         }
         // set the moves for the best board found
