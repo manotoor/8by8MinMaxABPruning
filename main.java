@@ -23,7 +23,7 @@ public class main{
     Board res = a.initialRun(20);
     int[] move = res.getMove();
     res.printBoard();
-    System.out.println(move[0] + "-"+ move[1]);
+    //System.out.println(move[0] + "-"+ move[1]);
 
 
 

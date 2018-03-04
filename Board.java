@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class Board extends State<Board>{
 
-  public static final double WIN = Double.POSITIVE_INFINITY;
-  public static final double LOSS = Double.NEGATIVE_INFINITY;
+  public static final double WIN = Double.MAX_VALUE;
+  public static final double LOSS = -Double.MAX_VALUE;
 
   final int DIM = 8;
   //0 == nothing, 1 == player, -1 == computer
@@ -151,9 +151,9 @@ public class Board extends State<Board>{
           int[] move = {i,j};
           b.setMove(move);
           t.add(b);
-          b.printBoard();
+          //b.printBoard();
 
-          System.out.println(b.getEstimateValue()+ "\n");
+          //System.out.println(b.getEstimateValue()+ "\n");
         }
       }
     }

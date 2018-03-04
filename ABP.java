@@ -15,7 +15,7 @@ public class ABP{
 
   //calls this to start alpha beta pruning
   public Board initialRun(long time){
-    return run(Double.POSITIVE_INFINITY,Double.NEGATIVE_INFINITY,System.currentTimeMillis() + (time*1000));
+    return run(Double.MAX_VALUE,-Double.MAX_VALUE,System.currentTimeMillis() + (time*1000));
   }
 
   //requires alpha, beta, and end time
@@ -42,7 +42,7 @@ public class ABP{
         //the best state that will be found from the children
         Board bestState = initial;
         //the current best value
-        double bestVal = Double.NEGATIVE_INFINITY;
+        double bestVal = Double.MAX_VALUE;
 
         //get the current state's children
         ArrayList<Board>children = initial.getChildren(true);
@@ -75,7 +75,7 @@ public class ABP{
       else{
 
         Board bestState = initial;
-        double bestVal = Double.POSITIVE_INFINITY;
+        double bestVal = -Double.MAX_VALUE;
 
         ArrayList<Board>children = initial.getChildren(false);
         for(Board c : children){
