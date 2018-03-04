@@ -24,8 +24,8 @@ public class ABP{
     //the utility value would have already been set to +- infinity
     System.out.println("Depth : "+depth);
     if(initial.isFinishedState()){
-      System.out.println("Finished State Reached : " +initial.getUtilityValue());
-      initial.printBoard();
+      //System.out.println("Finished State Reached : " +initial.getUtilityValue());
+      //initial.printBoard();
       return initial;
     }
     //the state is a regular state
@@ -59,7 +59,7 @@ public class ABP{
           if(value > bestVal){
             bestVal = value;
             bestState = res;
-            bestMove = res.getMove();
+            bestMove = c.getMove();
           }
           // pruning, do not continue
           else if (value >= beta) {
