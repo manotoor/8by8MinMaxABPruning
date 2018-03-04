@@ -15,7 +15,7 @@ public class ABP{
 
   //calls this to start alpha beta pruning
   public Board initialRun(long time){
-    return run(Double.MAX_VALUE,-Double.MAX_VALUE,System.currentTimeMillis() + (time*1000));
+    return run(Double.POSITIVE_INFINITY,Double.NEGATIVE_INFINITY,System.currentTimeMillis() + (time*1000));
   }
 
   //requires alpha, beta, and end time
@@ -42,9 +42,7 @@ public class ABP{
         //the best state that will be found from the children
         Board bestState = initial;
         //the current best value
-        double bestVal = -Double.MAX_VALUE;
-        //corresponds to the best state
-        int[] bestMove = initial.getMove();
+        double bestVal = Double.NEGATIVE_INFINITY;
 
         //get the current state's children
         ArrayList<Board>children = initial.getChildren(true);
@@ -58,27 +56,26 @@ public class ABP{
           //if the resulting state is the better than the saved one ; update best vars
           if(value > bestVal){
             bestVal = value;
-            bestState = res;
-            bestMove = c.getMove();
-          }
-          // pruning, do not continue
-          else if (value >= beta) {
-            break;
+            bestState = c;
           }
           // set alpha to whatever variable is larger
           // between alpha max
           alpha = Math.max(alpha, value);
+          // pruning, do not continue
+           if (beta <= alpha) {
+            break;
+          }
+
         }
         // set the moves for the best board found
-        bestState.setMove(bestMove);
+        //bestState.setMove(bestMove);
         return bestState;
       }
       //min level
       else{
 
         Board bestState = initial;
-        double bestVal = Double.MAX_VALUE;
-        int[] bestMove = initial.getMove();
+        double bestVal = Double.POSITIVE_INFINITY;
 
         ArrayList<Board>children = initial.getChildren(false);
         for(Board c : children){
@@ -87,19 +84,17 @@ public class ABP{
           Double value = res.getUtilityValue();
           if(value < bestVal){
             bestVal = value;
-            bestState = res;
-            bestMove = c.getMove();
+            bestState = c;
           }
+          beta = Math.min(beta, value);
           // Prune branches that do not lead to better choices
-          if (value <= alpha) {
+          if (beta <= alpha) {
             break;
           }
-          // set alpha to whatever variable is larger
-          // between alpha max
-          beta = Math.min(beta, value);
+
         }
         // set the moves for the best board found
-        bestState.setMove(bestMove);
+        //bestState.setMove(bestMove);
         return bestState;
       }
     }

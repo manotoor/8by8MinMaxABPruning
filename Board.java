@@ -151,6 +151,9 @@ public class Board extends State<Board>{
           int[] move = {i,j};
           b.setMove(move);
           t.add(b);
+          b.printBoard();
+
+          System.out.println(b.getEstimateValue()+ "\n");
         }
       }
     }

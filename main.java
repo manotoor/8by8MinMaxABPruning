@@ -15,11 +15,16 @@ public class main{
 
     System.out.println(b.getEstimateValue());
 
+
+    //b.getChildren(true);
+
+
     ABP a = new ABP(b, 5, true);
-    Board res = a.initialRun(5);
+    Board res = a.initialRun(20);
     int[] move = res.getMove();
     res.printBoard();
     System.out.println(move[0] + "-"+ move[1]);
+
 
 
 
