@@ -51,6 +51,7 @@ public class ABP{
           ABP a = new ABP(c,depth - 1, false);
           //get the aplha beta pruning result of the current state
           Board res = a.run(alpha, beta, endTime);
+          System.out.println("Visited children :" + res.toString() + " | "+depth + " | "+res.getEstimateValue()+ " | "+res.printMove());
           //get the resulting state's utility value
           Double value = res.getUtilityValue();
           //if the resulting state is the better than the saved one ; update best vars
@@ -82,6 +83,7 @@ public class ABP{
         for(Board c : children){
           ABP a = new ABP(c,depth - 1, true);
           Board res = a.run(alpha, beta, endTime);
+          System.out.println("Visited children :" + res.toString() + " | "+depth+ " | "+res.getEstimateValue() + " | "+res.printMove());
           Double value = res.getUtilityValue();
           if(value < bestVal){
             bestVal = value;
