@@ -42,7 +42,7 @@ public class ABP{
         //the best state that will be found from the children
         Board bestState = initial;
         //the current best value
-        double bestVal = Double.MAX_VALUE;
+        double bestVal = -Double.MAX_VALUE;
 
         //get the current state's children
         ArrayList<Board>children = initial.getChildren(true);
@@ -75,7 +75,7 @@ public class ABP{
       else{
 
         Board bestState = initial;
-        double bestVal = -Double.MAX_VALUE;
+        double bestVal = Double.MAX_VALUE;
 
         ArrayList<Board>children = initial.getChildren(false);
         for(Board c : children){
