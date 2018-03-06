@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Board extends State<Board>{
 
   public static final double WIN = Double.MAX_VALUE;
   public static final double LOSS = -Double.MAX_VALUE;
+   Map rowCol = new HashMap();
 
   private static final int[][] evalTable = {
     { 0, 0, 0, 0, 0, 0, 0, 0},
@@ -23,6 +25,10 @@ public class Board extends State<Board>{
   int[][] values;
 
   public Board(){
+  char[] row = {'A','B','C','D','E','F','G','H'};
+  for(int i = 0; i < DIM; i++){
+    	rowCol.put(row[i],i);
+    }
     values = new int[DIM][DIM];
     for(int i = 0; i < DIM; i++){
       for(int j = 0; j < DIM; i++){
@@ -43,6 +49,10 @@ public class Board extends State<Board>{
   }
 
   public Board(int[][] v){
+   char[] row = {'A','B','C','D','E','F','G','H'};
+  for(int i = 0; i < DIM; i++){
+    	rowCol.put(row[i],i);
+    }
     values = v;
     evaluate();
   }
