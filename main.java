@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class main{
   public static void main(String args[]){
-      
+
      //Who is going first, AI or player?
 	  boolean playerTurn = false;
 	  //Time in Seconds
@@ -34,7 +34,7 @@ public class main{
                   { 0, 0, 0, 0, 0, 0, 0, 0},
                   { 0, 0, 0, 0, 0, 0, 0, 0}};
     Board b = new Board(v);
-   
+
     System.out.println("ORiginal Val :"+b.getEstimateValue());
 
    //How much time should AI have per move?
@@ -52,7 +52,8 @@ public class main{
         ABP a = new ABP(b,3,true);
         Board res = a.initialRun(5);
 		  int[] move = res.getMove();
-        b.updateBoard(move);
+      //b.updateBoard(move);
+      b =res;
 		  b.printBoard();
 		  playerTurn = true;
 	  }

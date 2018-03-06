@@ -220,7 +220,7 @@ public class Board extends State<Board>{
 //       System.out.println();
 //     }
 //   }
-   
+
    public void printBoard(){
 	  String[] rows = {"A","B","C","D","E","F","G","H"};
 	  for(int i =0; i <= DIM; i++){
@@ -250,6 +250,7 @@ public class Board extends State<Board>{
 }
 public void updateBoard(int[] move){
 	values[move[0]][move[1]] = 1;
+  evaluate();
 }
   public String printMove(){
     return move[0] + ","+move[1];
