@@ -40,13 +40,15 @@ public class ABP{
       //if max operation is performed
       if(max){
 
-        //the best state that will be found from the children
-        Board bestState = initial;
+
         //the current best value
         double bestVal = -Double.MAX_VALUE;
 
         //get the current state's children
         ArrayList<Board>children = initial.getChildren(true);
+        //the best state that will be found from the children
+        Board bestState = children.get(0);
+        children.remove(0);
         for(Board c : children){
 
           //set up the alpha beta pruning for the current state
@@ -83,10 +85,12 @@ public class ABP{
       else{
 
 
-        Board bestState = initial;
         double bestVal = Double.MAX_VALUE;
 
         ArrayList<Board>children = initial.getChildren(false);
+        //the best state that will be found from the children
+        Board bestState = children.get(0);
+        children.remove(0);
         for(Board c : children){
 
           ABP a = new ABP(c,depth - 1, true);

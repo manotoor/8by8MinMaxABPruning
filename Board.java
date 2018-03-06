@@ -247,6 +247,7 @@ public class Board extends State<Board>{
 	int i = (int) rowCol.get(_move.toUpperCase().charAt(0));
 	int j = Character.getNumericValue(_move.charAt(1)) -1;
 	values[i][j] = -1;
+  evaluate();
 }
 public void updateBoard(int[] move){
 	values[move[0]][move[1]] = 1;

@@ -34,9 +34,6 @@ public class main{
                   { 0, 0, 0, 0, 0, 0, 0, 0},
                   { 0, 0, 0, 0, 0, 0, 0, 0}};
     Board b = new Board(v);
-
-    System.out.println("ORiginal Val :"+b.getEstimateValue());
-
    //How much time should AI have per move?
    System.out.println("\nHow much time should AI have?(s)");
    time = input.nextInt()*1000;
@@ -51,13 +48,13 @@ public class main{
 		  }
         ABP a = new ABP(b,3,true);
         Board res = a.initialRun(5);
-		  int[] move = res.getMove();
-      //b.updateBoard(move);
-      b =res;
-		  b.printBoard();
-		  playerTurn = true;
+		    int[] move = res.getMove();
+        b = res;
+  		  b.printBoard();
+  		  playerTurn = true;
 	  }
 	  b.printBoard();
+    System.out.println("Game is done");
 
     // ABP a = new ABP(b, 3, true);
 //     long start  =System.currentTimeMillis();
