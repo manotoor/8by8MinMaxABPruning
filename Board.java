@@ -212,15 +212,45 @@ public class Board extends State<Board>{
     return child;
   }
 
-  public void printBoard(){
+  // public void printBoard(){
+//     for(int i =0; i < DIM; i++){
+//       for(int j = 0; j < DIM; j++){
+//         System.out.printf("%2d ",values[i][j]);
+//       }
+//       System.out.println();
+//     }
+//   }
+   
+   public void printBoard(){
+	  String[] rows = {"A","B","C","D","E","F","G","H"};
+	  for(int i =0; i <= DIM; i++){
+		  if(i == 0)
+			  System.out.print("  ");
+		  else
+			  System.out.print(i + " ");
+	  }
+	  System.out.println("");
     for(int i =0; i < DIM; i++){
+    	System.out.print(rows[i]+" ");
       for(int j = 0; j < DIM; j++){
-        System.out.printf("%2d ",values[i][j]);
+    	  if(values[i][j] == 0)
+    		  System.out.print("- ");
+    	  if(values[i][j] == 1)
+    		  System.out.print("X ");
+    	  if(values[i][j] == -1)
+    		  System.out.print("O ");
       }
       System.out.println();
     }
   }
-
+   public void playerMove(String _move) {
+	int i = (int) rowCol.get(_move.toUpperCase().charAt(0));
+	int j = Character.getNumericValue(_move.charAt(1)) -1;
+	values[i][j] = -1;
+}
+public void updateBoard(int[] move){
+	values[move[0]][move[1]] = 1;
+}
   public String printMove(){
     return move[0] + ","+move[1];
   }
