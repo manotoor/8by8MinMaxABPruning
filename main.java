@@ -3,27 +3,32 @@ public class main{
 
 
     //testing
-    int [][] v = {{0,0,1,0,0,0,0,0},
-                  {0,0,1,0,0,0,0,0},
-                  {0,0,1,0,0,0,0,0},
-                  {0,0,0,0,0,0,0,0},
-                  {0,0,0,0,0,0,0,0},
-                  {0,0,0,0,0,0,0,0},
-                  {0,0,0,0,0,0,0,0},
-                  {0,0,0,0,0,0,0,0}};
+    int [][] v = {{ 0, 0, 0, 0, 0, 0, 0, 0},
+                  { 0, 0, 0, 0, 0, 0, 0, 0},
+                  { 0, 0, 0, 0, 0, 0, 0, 0},
+                  { 0, 0, 0, 0, 0, 0, 0, 0},
+                  { 0, 0, 0, 0, 0, 0, 0, 0},
+                  { 0, 0, 0, 0, 0, 0, 0, 0},
+                  { 0, 0, 0, 0, 0, 0, 0, 0},
+                  { 0, 0, 0, 0, 0, 0, 0, 0}};
     Board b = new Board(v);
 
-    System.out.println(b.getEstimateValue());
+    System.out.println("ORiginal Val :"+b.getEstimateValue());
 
 
     //b.getChildren(true);
 
 
+
     ABP a = new ABP(b, 3, true);
-    Board res = a.initialRun(20);
+    long start  =System.currentTimeMillis();
+    Board res = a.initialRun(5);
+    System.out.println(System.currentTimeMillis() - start);
     int[] move = res.getMove();
     res.printBoard();
-    //System.out.println(move[0] + "-"+ move[1]);
+    System.out.println("Res Val :"+res.getEstimateValue());
+    System.out.println(move[0] + "-"+ move[1]);
+
 
 
 

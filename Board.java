@@ -7,6 +7,17 @@ public class Board extends State<Board>{
   public static final double WIN = Double.MAX_VALUE;
   public static final double LOSS = -Double.MAX_VALUE;
 
+  private static final int[][] evalTable = {
+    { 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0,10,10,10,10,10,10, 0},
+    { 0,10,18,18,18,18,10, 0},
+    { 0,10,18,20,20,18,10, 0},
+    { 0,10,18,20,20,18,10, 0},
+    { 0,10,18,18,18,18,10, 0},
+    { 0,10,10,10,10,10,10, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0}
+  };
+
   final int DIM = 8;
   //0 == nothing, 1 == player, -1 == computer
   int[][] values;
@@ -95,14 +106,34 @@ public class Board extends State<Board>{
   //We put the heuiristic function here, and set the value to 'evaluationValue'
   private void heuristic(){
     double sum = 0;
+    double type ;
+
     for(int i = 0; i < (DIM); i++){
       for(int j = 0; j <= (DIM)/2; j++){
+        //System.out.println(i + ","+j + " | " + (DIM/4)/(i+1)+ " | " + (DIM/4)/(j+1));
         if(values[i][j] != 0){
+          if(values[i][j] == -1){
+            type = 8;
+          }
+          else{
+            type = 10;
+          }
+
+          sum += (evalTable[i][j])*Math.pow(type,3);
+
+          if(values[i][j] == values[i][j+1]){
+            sum += (values[i][j] * Math.pow(type,2));
+          }
+          if(values[i][j] == values[i][j+1] && values[i][j] == values[i][j+2]){
+            sum += (values[i][j] * Math.pow(type,4));
+          }
+          /*
           if(values[i][j] == values[i][j+1] || values[i][j] == values[i][j+2] || values[i][j] == values[i][j+3]){
             for(int k = 0; k < 4; k++){
-              sum += (values[i][j+k] * 1000);
+              sum += (values[i][j+k] * 1001);
             }
           }
+          */
         }
       }
     }
@@ -110,11 +141,25 @@ public class Board extends State<Board>{
     for(int j = 0; j < (DIM); j++){
       for(int i = 0; i <= (DIM)/2; i++){
         if(values[i][j] != 0){
-          if(values[i][j] == values[i+1][j] || values[i][j] == values[i+2][j] || values[i][j] == values[i+3][j]){
+          if(values[i][j] == -1){
+            type = 8;
+          }
+          else{
+            type = 10;
+          }
+          if(values[i][j] == values[i+1][j]){
+            sum += (values[i][j] * Math.pow(type,2));
+          }
+          if(values[i][j] == values[i+1][j] && values[i][j] == values[i+2][j]){
+            sum += (values[i][j] * Math.pow(type,4));
+          }
+          /*
+          if(values[i][j] == values[i+1][j] || values[i][j] == values[i+2][j] ){
             for(int k = 0; k < 4; k++){
               sum += (values[i+k][j] * 1000);
             }
           }
+          */
         }
       }
     }

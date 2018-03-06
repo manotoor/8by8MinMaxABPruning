@@ -22,7 +22,7 @@ public class ABP{
   public Board run(double alpha, double beta,long endTime){
     //is the initial Board a finished state? if so break and return the state
     //the utility value would have already been set to +- infinity
-    System.out.println("Depth : "+depth);
+    //System.out.println("Depth : "+depth);
     if(initial.isFinishedState()){
       //System.out.println("Finished State Reached : " +initial.getUtilityValue());
       //initial.printBoard();
@@ -31,7 +31,7 @@ public class ABP{
     //the state is a regular state
     else{
       //if he max depth is reached or the time runs out
-      if( System.currentTimeMillis() == endTime ||depth == 0){
+      if(depth == 0){
         //updates the current state's utility value to it's estimate value
         initial.setUtilityValue(initial.getEstimateValue());
         return initial;
@@ -39,6 +39,7 @@ public class ABP{
 
       //if max operation is performed
       if(max){
+
         //the best state that will be found from the children
         Board bestState = initial;
         //the current best value
@@ -47,6 +48,7 @@ public class ABP{
         //get the current state's children
         ArrayList<Board>children = initial.getChildren(true);
         for(Board c : children){
+
           //set up the alpha beta pruning for the current state
           ABP a = new ABP(c,depth - 1, false);
           //get the aplha beta pruning result of the current state
@@ -66,10 +68,9 @@ public class ABP{
             alpha = value;
           // pruning, do not continue
            if (beta <= alpha) {
-            c.printBoard();
-            System.out.println("Alpha: " + alpha);
-            System.out.println("Beta: " + beta);
-            System.out.println("Value: " + value);
+            break;
+          }
+          if(System.currentTimeMillis() >= endTime){
             break;
           }
 
@@ -81,11 +82,13 @@ public class ABP{
       //min level
       else{
 
+
         Board bestState = initial;
         double bestVal = Double.MAX_VALUE;
 
         ArrayList<Board>children = initial.getChildren(false);
         for(Board c : children){
+
           ABP a = new ABP(c,depth - 1, true);
           Board res = a.run(alpha, beta, endTime);
           Double value = res.getUtilityValue();
@@ -100,6 +103,9 @@ public class ABP{
           // beta = Math.min(beta, value);
 //           // Prune branches that do not lead to better choices
            if (beta <= alpha) {
+             break;
+           }
+           if(System.currentTimeMillis() >= endTime){
              break;
            }
 
