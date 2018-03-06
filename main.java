@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class main{
   public static void main(String args[]){
       
@@ -16,11 +17,11 @@ public class main{
 	  player = input.next();
 	  if(player.toLowerCase().charAt(0) == 'y'){
 		  playerTurn = true;
-		  c = 1;
+		  c = -1;
 	  }
 	  else{
 		  playerTurn = false;
-		  c = 2;
+		  c = 1;
 	  }
 
     //testing
@@ -40,14 +41,12 @@ public class main{
    System.out.println("\nHow much time should AI have?(s)");
    time = input.nextInt()*1000;
     //b.getChildren(true);
-   
    while(!b.isFinishedState()){
 		  //If player is first
 		  if(player.toLowerCase().charAt(0) == 'y' || playerTurn){
 			  System.out.print("\nPlease enter a move: ");
 			  _move = input.next();
-			  _move += c;
-			  b.makeMove(mov);
+			  b.playerMove(_move);
 			  b.printBoard();
 		  }
         ABP a = new ABP(b,3,true);
