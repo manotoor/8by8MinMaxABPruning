@@ -7,18 +7,16 @@ public class Board extends State<Board>{
 
   public static final double WIN = Double.MAX_VALUE;
   public static final double LOSS = -Double.MAX_VALUE;
-   Map rowCol = new HashMap();
+  Map rowCol = new HashMap();
 
-
-
-  final int DIM = 8;
+  public static final int DIM = 8;
   //0 == nothing, 1 == player, -1 == computer
   int[][] values;
 
   public Board(){
-  char[] row = {'A','B','C','D','E','F','G','H'};
-  for(int i = 0; i < DIM; i++){
-    	rowCol.put(row[i],i);
+    char[] row = {'A','B','C','D','E','F','G','H'};
+    for(int i = 0; i < DIM; i++){
+      rowCol.put(row[i],i);
     }
     values = new int[DIM][DIM];
     for(int i = 0; i < DIM; i++){
@@ -40,9 +38,9 @@ public class Board extends State<Board>{
   }
 
   public Board(int[][] v){
-   char[] row = {'A','B','C','D','E','F','G','H'};
-  for(int i = 0; i < DIM; i++){
-    	rowCol.put(row[i],i);
+    char[] row = {'A','B','C','D','E','F','G','H'};
+    for(int i = 0; i < DIM; i++){
+      rowCol.put(row[i],i);
     }
     values = v;
     evaluate();
@@ -54,7 +52,6 @@ public class Board extends State<Board>{
 
   //override
   protected void evaluate(){
-
     if(!endState()){
       heuristic();
     }
@@ -114,7 +111,7 @@ public class Board extends State<Board>{
         //System.out.println(i + ","+j + " | " + (DIM/4)/(i+1)+ " | " + (DIM/4)/(j+1));
         if(values[i][j] != 0){
           if(values[i][j] == -1){
-            type = 8;
+            type = 9;
           }
           else{
             type = 10;
@@ -128,91 +125,91 @@ public class Board extends State<Board>{
           }
           /*
           if(values[i][j] == values[i][j+1] || values[i][j] == values[i][j+2] || values[i][j] == values[i][j+3]){
-            for(int k = 0; k < 4; k++){
-              sum += (values[i][j+k] * 1001);
-            }
-          }
-          */
+          for(int k = 0; k < 4; k++){
+          sum += (values[i][j+k] * 1001);
         }
       }
+      */
     }
-    //looks for 4 of one type vertically
-    for(int j = 0; j < (DIM); j++){
-      for(int i = 0; i <= (DIM)/2; i++){
-        if(values[i][j] != 0){
-          if(values[i][j] == -1){
-            type = 8;
-          }
-          else{
-            type = 10;
-          }
-          
-          if(values[i][j] == values[i+1][j]){
-            sum += (values[i][j] * Math.pow(type,2));
-          }
-          if(values[i][j] == values[i+1][j] && values[i][j] == values[i+2][j]){
-            sum += (values[i][j] * Math.pow(type,4));
-          }
-          /*
-          if(values[i][j] == values[i+1][j] || values[i][j] == values[i+2][j] ){
-            for(int k = 0; k < 4; k++){
-              sum += (values[i+k][j] * 1000);
-            }
-          }
-          */
-        }
+  }
+}
+//looks for 4 of one type vertically
+for(int j = 0; j < (DIM); j++){
+  for(int i = 0; i <= (DIM)/2; i++){
+    if(values[i][j] != 0){
+      if(values[i][j] == -1){
+        type = 9;
       }
+      else{
+        type = 10;
+      }
+
+      if(values[i][j] == values[i+1][j]){
+        sum += (values[i][j] * Math.pow(type,2));
+      }
+      if(values[i][j] == values[i+1][j] && values[i][j] == values[i+2][j]){
+        sum += (values[i][j] * Math.pow(type,4));
+      }
+      /*
+      if(values[i][j] == values[i+1][j] || values[i][j] == values[i+2][j] ){
+      for(int k = 0; k < 4; k++){
+      sum += (values[i+k][j] * 1000);
     }
-    evaluationValue = sum;
   }
-
-
-  //override
-  //indicates when the state is a finished State
-  protected boolean isFinishedState(){
-    return (utilityValue == WIN || utilityValue == LOSS);
-  }
-
-  /*gets all children states
-  @param turn : indicates whose turn it is; computer or player
   */
-  protected ArrayList<Board> getChildren(boolean turn){
-    int cv;
-    if(turn){
-      cv = 1;
-    }else{
-      cv = -1;
-    }
-    ArrayList<Board> t = new ArrayList<>();
+}
+}
+}
+evaluationValue = sum;
+}
 
-    int[][] temp = copy();
 
-    for(int i =0; i < DIM; i++){
-      for(int j = 0; j < DIM; j++){
-        if(temp[i][j] == 0){
-          int[][] a = copy();
-          a[i][j] = cv;
-          Board b = new Board(a);
-          int[] move = {i,j};
-          b.setMove(move);
-          t.add(b);
-          //b.printBoard();
+//override
+//indicates when the state is a finished State
+protected boolean isFinishedState(){
+  return (utilityValue == WIN || utilityValue == LOSS);
+}
 
-          //System.out.println(b.getEstimateValue()+ "\n");
-        }
+/*gets all children states
+@param turn : indicates whose turn it is; computer or player
+*/
+protected ArrayList<Board> getChildren(boolean turn){
+  int cv;
+  if(turn){
+    cv = 1;
+  }else{
+    cv = -1;
+  }
+  ArrayList<Board> t = new ArrayList<>();
+
+  int[][] temp = copy();
+
+  for(int i =0; i < DIM; i++){
+    for(int j = 0; j < DIM; j++){
+      if(temp[i][j] == 0){
+        int[][] a = copy();
+        a[i][j] = cv;
+        Board b = new Board(a);
+        int[] move = {i,j};
+        b.setMove(move);
+        t.add(b);
+        //b.printBoard();
+
+        //System.out.println(b.getEstimateValue()+ "\n");
       }
     }
-    return t;
   }
+  return t;
+}
 
-  private int[][] copy() {
-    int[][] child = new int[values.length][];
-    for (int i = 0; i < values.length; i++)
-    child[i] = Arrays.copyOf(values[i], values.length);
-    return child;
-  }
+private int[][] copy() {
+  int[][] child = new int[values.length][];
+  for (int i = 0; i < values.length; i++)
+  child[i] = Arrays.copyOf(values[i], values.length);
+  return child;
+}
 
-  // public void printBoard(){
+// public void printBoard(){
 //     for(int i =0; i < DIM; i++){
 //       for(int j = 0; j < DIM; j++){
 //         System.out.printf("%2d ",values[i][j]);
@@ -221,41 +218,41 @@ public class Board extends State<Board>{
 //     }
 //   }
 
-   public void printBoard(){
-	  String[] rows = {"A","B","C","D","E","F","G","H"};
-	  for(int i =0; i <= DIM; i++){
-		  if(i == 0)
-			  System.out.print("  ");
-		  else
-			  System.out.print(i + " ");
-	  }
-	  System.out.println("");
-    for(int i =0; i < DIM; i++){
-    	System.out.print(rows[i]+" ");
-      for(int j = 0; j < DIM; j++){
-    	  if(values[i][j] == 0)
-    		  System.out.print("- ");
-    	  if(values[i][j] == 1)
-    		  System.out.print("X ");
-    	  if(values[i][j] == -1)
-    		  System.out.print("O ");
-      }
-      System.out.println();
+public void printBoard(){
+  String[] rows = {"A","B","C","D","E","F","G","H"};
+  for(int i =0; i <= DIM; i++){
+    if(i == 0)
+    System.out.print("  ");
+    else
+    System.out.print(i + " ");
+  }
+  System.out.println("");
+  for(int i =0; i < DIM; i++){
+    System.out.print(rows[i]+" ");
+    for(int j = 0; j < DIM; j++){
+      if(values[i][j] == 0)
+      System.out.print("- ");
+      if(values[i][j] == 1)
+      System.out.print("X ");
+      if(values[i][j] == -1)
+      System.out.print("O ");
     }
+    System.out.println();
   }
-   public void playerMove(String _move) {
-	int i = (int) rowCol.get(_move.toUpperCase().charAt(0));
-	int j = Character.getNumericValue(_move.charAt(1)) -1;
-	values[i][j] = -1;
+}
+public void playerMove(String _move) {
+  int i = (int) rowCol.get(_move.toUpperCase().charAt(0));
+  int j = Character.getNumericValue(_move.charAt(1)) -1;
+  values[i][j] = -1;
+  int[] m = {i,j};
+  setMove(m);
   evaluate();
 }
-public void updateBoard(int[] move){
-	values[move[0]][move[1]] = 1;
-  evaluate();
+
+public String printMove(){
+  char[] row = {'A','B','C','D','E','F','G','H'};
+  return row[move[0]] + ","+(move[1]+1);
 }
-  public String printMove(){
-    return move[0] + ","+move[1];
-  }
 
 
 }

@@ -18,11 +18,9 @@ public class main{
 	  player = input.next();
 	  if(player.toLowerCase().charAt(0) == 'y'){
 		  playerTurn = true;
-		  c = -1;
 	  }
 	  else{
 		  playerTurn = false;
-		  c = 1;
 	  }
 
     //testing
@@ -39,38 +37,41 @@ public class main{
    System.out.println("\nHow much time should AI have?(s)");
    time = input.nextInt();
 
-    b.printBoard();
-
-
-
-
+   b.printBoard();
 
    while(!b.isFinishedState()){
 		  //If player is first
-		  if(player.toLowerCase().charAt(0) == 'y' || playerTurn){
+		  if(playerTurn){
 			  System.out.print("\nPlease enter a move: ");
 			  _move = input.next();
-			  b.playerMove(_move);
-			  b.printBoard();
+        int i = _move.toUpperCase().charAt(0)-65;
+        int j = Character.getNumericValue(_move.charAt(1)) -1;
+        if(i >= 0 && j >= 0 && i < Board.DIM && j < Board.DIM && b.getBoard()[i][j] == 0){
+          b.playerMove(_move);
+          System.out.println(b.printMove());
+  			  b.printBoard();
+          playerTurn = false;
+        }
+        else{
+          System.out.println("Invalid Move. Try Again.");
+        }
 		  }
+      if(!playerTurn){
         ABP a = new ABP(b,5,true);
-        Board res = a.initialRun(5);
+        Board res = a.initialRun(time);
 		    int[] move = res.getMove();
         b = res;
   		  b.printBoard();
   		  playerTurn = true;
+      }
 	  }
+
+
+
 	  b.printBoard();
     System.out.println("Game is done");
 
-    // ABP a = new ABP(b, 3, true);
-//     long start  =System.currentTimeMillis();
-//     Board res = a.initialRun(5);
-//     System.out.println(System.currentTimeMillis() - start);
-//     int[] move = res.getMove();
-//     res.printBoard();
-//     System.out.println("Res Val :"+res.getEstimateValue());
-//     System.out.println(move[0] + "-"+ move[1]);
+
 
 
 
