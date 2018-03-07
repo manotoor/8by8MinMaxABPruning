@@ -26,9 +26,9 @@ public class main{
 	  }
 
     //testing
-    int [][] v = {{ 0, 0, 0, 0, 0, 0, 0, 0},
-                  { 0, 0, 0, 0, 0, 0, 0, 0},
-                  { 0, 0, 0, 0, 0, 0, 0, 0},
+    int [][] v = {{ 0, -1, -1, 1, -1, 0, 0, 0},
+                  { 0, 0, 0, 1, 0, 0, 0, 0},
+                  { 0, 0, 0, 1, 0, 0, 0, 0},
                   { 0, 0, 0, 0, 0, 0, 0, 0},
                   { 0, 0, 0, 0, 0, 0, 0, 0},
                   { 0, 0, 0, 0, 0, 0, 0, 0},
@@ -50,14 +50,23 @@ public class main{
 		  if(player.toLowerCase().charAt(0) == 'y' || playerTurn){
 			  System.out.print("\nPlease enter a move: ");
 			  _move = input.next();
-			  b.playerMove(_move);
+           if(b.validMove(_move)){
+			   b.playerMove(_move);
+           }else{
+            while(!b.validMove(_move)){
+               System.out.println("That was not a valid move, please enter a new move: ");
+               _move = input.next();
+            }
+            b.playerMove(_move);
+           }
 			  b.printBoard();
 		  }
-        ABP a = new ABP(b,5,true);
-        Board res = a.initialRun(5);
-		    int[] move = res.getMove();
+        ABP a = new ABP(b,10,true);
+        Board res = a.initialRun(time);
+		  int[] move = res.getMove();
         b = res;
   		  b.printBoard();
+        System.out.println("My move is:  " + b.printMove());
   		  playerTurn = true;
 	  }
 	  b.printBoard();

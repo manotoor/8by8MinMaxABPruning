@@ -114,7 +114,7 @@ public class Board extends State<Board>{
         //System.out.println(i + ","+j + " | " + (DIM/4)/(i+1)+ " | " + (DIM/4)/(j+1));
         if(values[i][j] != 0){
           if(values[i][j] == -1){
-            type = 8;
+            type = 9;
           }
           else{
             type = 10;
@@ -141,17 +141,17 @@ public class Board extends State<Board>{
       for(int i = 0; i <= (DIM)/2; i++){
         if(values[i][j] != 0){
           if(values[i][j] == -1){
-            type = 8;
+            type = 9;
           }
           else{
             type = 10;
           }
           
           if(values[i][j] == values[i+1][j]){
-            sum += (values[i][j] * Math.pow(type,2));
+            sum += (values[i][j] *Math.pow(type,2));
           }
           if(values[i][j] == values[i+1][j] && values[i][j] == values[i+2][j]){
-            sum += (values[i][j] * Math.pow(type,4));
+            sum += (values[i][j]*Math.pow(type,4));
           }
           /*
           if(values[i][j] == values[i+1][j] || values[i][j] == values[i+2][j] ){
@@ -246,15 +246,35 @@ public class Board extends State<Board>{
    public void playerMove(String _move) {
 	int i = (int) rowCol.get(_move.toUpperCase().charAt(0));
 	int j = Character.getNumericValue(_move.charAt(1)) -1;
-	values[i][j] = -1;
-  evaluate();
+   int[] _m = {i,j};
+   if(values[i][j] == 0){
+	   values[i][j] = -1;
+      setMove(_m);
+      evaluate();
+   }else{
+      System.out.println("Invalid move, sorry. Please restart.");
+   }
+}
+public boolean validMove(String move){
+   int i,j;
+   System.out.println(move);
+   if(rowCol.containsKey(move.toUpperCase().charAt(0))){
+      i = (int) rowCol.get(move.toUpperCase().charAt(0));
+      j = Character.getNumericValue(move.charAt(1)) -1;
+      if(j > 7 || j < 0)
+         return false;
+      return values[i][j] ==0 ? true:false;
+   }else
+      return false;
 }
 public void updateBoard(int[] move){
 	values[move[0]][move[1]] = 1;
   evaluate();
 }
   public String printMove(){
-    return move[0] + ","+move[1];
+    char[] row = {'A','B','C','D','E','F','G','H'};
+    int j = move[1] +1;
+    return row[move[0]] + ","+j;
   }
 
 
