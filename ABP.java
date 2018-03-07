@@ -58,7 +58,7 @@ public class ABP{
           Double value = res.getUtilityValue();
           //if the resulting state is the better than the saved one ; update best vars
 
-          
+
           if(value > bestVal){
             bestVal = value;
             bestState = c;
@@ -97,7 +97,8 @@ public class ABP{
           }
 
            beta = Math.min(beta, value);
-//           // Prune branches that do not lead to better choices
+
+           // Prune branches that do not lead to better choices
            if (beta <= alpha) {
              break;
            }
