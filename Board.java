@@ -248,7 +248,17 @@ public void playerMove(String _move) {
   setMove(m);
   evaluate();
 }
-
+public boolean validMove(String move){
+   int i,j;
+   if(rowCol.containsKey(move.toUpperCase().charAt(0))){
+      i = (int) rowCol.get(move.toUpperCase().charAt(0));
+      j = Character.getNumericValue(move.charAt(1)) -1;
+      if(j > 7 || j < 0)
+         return false;
+      return values[i][j] ==0 ? true:false;
+   }else
+      return false;
+}
 public String printMove(){
     char[] row = {'A','B','C','D','E','F','G','H'};
     int j = move[1] +1;

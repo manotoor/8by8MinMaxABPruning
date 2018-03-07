@@ -38,39 +38,31 @@ public class main{
     b.printBoard();
 
     while(!b.isFinishedState()){
-      if(playerTurn){
-        System.out.print("\nPlease enter a move: ");
-        _move = input.next();
-        int i = _move.toUpperCase().charAt(0)-65;
-        int j = Character.getNumericValue(_move.charAt(1)) -1;
-        if(i >= 0 && j >= 0 && i < Board.DIM && j < Board.DIM && b.getBoard()[i][j] == 0){
-          b.playerMove(_move);
-          System.out.println(b.printMove());
-          b.printBoard();
-          playerTurn = false;
-        }
-        else{
-          System.out.println("Invalid Move. Try Again.");
-        }
-      }
-      if(!playerTurn){
-        ABP a = new ABP(b,5,true);
+		  //If player is first
+		  if(player.toLowerCase().charAt(0) == 'y' || playerTurn){
+			  System.out.print("\nPlease enter a move: ");
+			  _move = input.next();
+           if(b.validMove(_move)){
+			   b.playerMove(_move);
+           }else{
+            while(!b.validMove(_move)){
+               System.out.println("That was not a valid move, please enter a new move: ");
+               _move = input.next();
+            }
+            b.playerMove(_move);
+           }
+			  b.printBoard();
+		  }
+        ABP a = new ABP(b,10,true);
         Board res = a.initialRun(time);
-        int[] move = res.getMove();
+		  int[] move = res.getMove();
         b = res;
-        b.printBoard();
-	System.out.println("My move is:  " + b.printMove());
-        playerTurn = true;
-      }
-    }
-
-    b.printBoard();
+  		  b.printBoard();
+        System.out.println("My move is:  " + b.printMove());
+  		  playerTurn = true;
+	  }
+	  b.printBoard();
     System.out.println("Game is done");
-
-
-
-
-
 
 
 

@@ -37,6 +37,8 @@ public abstract class State<I extends State>{
    protected void setMove(int[] m){
     move  = m;
   }
+  //validates move
+  abstract protected boolean validMove(String move);
 
 
   /*gets all children states
