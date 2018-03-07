@@ -59,6 +59,7 @@ public class main{
         int[] move = res.getMove();
         b = res;
         b.printBoard();
+	System.out.println("My move is:  " + b.printMove());
         playerTurn = true;
       }
     }

@@ -250,9 +250,10 @@ public void playerMove(String _move) {
 }
 
 public String printMove(){
-  char[] row = {'A','B','C','D','E','F','G','H'};
-  return row[move[0]] + ","+(move[1]+1);
-}
+    char[] row = {'A','B','C','D','E','F','G','H'};
+    int j = move[1] +1;
+    return row[move[0]] + ","+j;
+  }
 
 
 }
