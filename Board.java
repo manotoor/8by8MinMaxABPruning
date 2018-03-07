@@ -9,16 +9,7 @@ public class Board extends State<Board>{
   public static final double LOSS = -Double.MAX_VALUE;
    Map rowCol = new HashMap();
 
-  private static final int[][] evalTable = {
-    { 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0,10,10,10,10,10,10, 0},
-    { 0,10,18,18,18,18,10, 0},
-    { 0,10,18,20,20,18,10, 0},
-    { 0,10,18,20,20,18,10, 0},
-    { 0,10,18,18,18,18,10, 0},
-    { 0,10,10,10,10,10,10, 0},
-    { 0, 0, 0, 0, 0, 0, 0, 0}
-  };
+
 
   final int DIM = 8;
   //0 == nothing, 1 == player, -1 == computer
@@ -129,8 +120,6 @@ public class Board extends State<Board>{
             type = 10;
           }
 
-          sum += (evalTable[i][j])*Math.pow(type,3);
-
           if(values[i][j] == values[i][j+1]){
             sum += (values[i][j] * Math.pow(type,2));
           }
@@ -157,6 +146,7 @@ public class Board extends State<Board>{
           else{
             type = 10;
           }
+          
           if(values[i][j] == values[i+1][j]){
             sum += (values[i][j] * Math.pow(type,2));
           }

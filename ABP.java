@@ -41,13 +41,12 @@ public class ABP{
       if(max){
 
 
-        //the current best value
-        double bestVal = -Double.MAX_VALUE;
 
         //get the current state's children
         ArrayList<Board>children = initial.getChildren(true);
         //the best state that will be found from the children
         Board bestState = children.get(0);
+        double bestVal = bestState.getEstimateValue();
         children.remove(0);
         for(Board c : children){
 
@@ -58,21 +57,20 @@ public class ABP{
           //get the resulting state's utility value
           Double value = res.getUtilityValue();
           //if the resulting state is the better than the saved one ; update best vars
+
+          
           if(value > bestVal){
             bestVal = value;
             bestState = c;
           }
           // set alpha to whatever variable is larger
           // between alpha max
-          if(alpha >= value)
-            alpha = alpha;
-          if(value >= alpha)
-            alpha = value;
+          alpha = Math.max(alpha, value);
           // pruning, do not continue
            if (beta <= alpha) {
             break;
           }
-          if(System.currentTimeMillis() >= endTime){
+          if(System.currentTimeMillis() >= endTime || bestState.getUtilityValue() == Board.WIN){
             break;
           }
 
@@ -83,13 +81,10 @@ public class ABP{
       }
       //min level
       else{
-
-
-        double bestVal = Double.MAX_VALUE;
-
         ArrayList<Board>children = initial.getChildren(false);
         //the best state that will be found from the children
         Board bestState = children.get(0);
+        double bestVal = bestState.getEstimateValue();
         children.remove(0);
         for(Board c : children){
 
@@ -100,16 +95,13 @@ public class ABP{
             bestVal = value;
             bestState = c;
           }
-          if(beta <= value)
-            beta = beta;
-          if(value <= beta)
-            beta = value;
-          // beta = Math.min(beta, value);
+
+           beta = Math.min(beta, value);
 //           // Prune branches that do not lead to better choices
            if (beta <= alpha) {
              break;
            }
-           if(System.currentTimeMillis() >= endTime){
+           if(System.currentTimeMillis() >= endTime || bestState.getUtilityValue() == Board.LOSS){
              break;
            }
 

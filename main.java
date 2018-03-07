@@ -2,6 +2,7 @@ import java.util.Scanner;
 public class main{
   public static void main(String args[]){
 
+
      //Who is going first, AI or player?
 	  boolean playerTurn = false;
 	  //Time in Seconds
@@ -36,8 +37,14 @@ public class main{
     Board b = new Board(v);
    //How much time should AI have per move?
    System.out.println("\nHow much time should AI have?(s)");
-   time = input.nextInt()*1000;
-    //b.getChildren(true);
+   time = input.nextInt();
+
+    b.printBoard();
+
+
+
+
+
    while(!b.isFinishedState()){
 		  //If player is first
 		  if(player.toLowerCase().charAt(0) == 'y' || playerTurn){
@@ -46,7 +53,7 @@ public class main{
 			  b.playerMove(_move);
 			  b.printBoard();
 		  }
-        ABP a = new ABP(b,3,true);
+        ABP a = new ABP(b,5,true);
         Board res = a.initialRun(5);
 		    int[] move = res.getMove();
         b = res;
@@ -64,6 +71,7 @@ public class main{
 //     res.printBoard();
 //     System.out.println("Res Val :"+res.getEstimateValue());
 //     System.out.println(move[0] + "-"+ move[1]);
+
 
 
 
