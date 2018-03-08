@@ -9,6 +9,7 @@ public class Board extends State<Board>{
 
   public static final double WIN = Double.MAX_VALUE;
   public static final double LOSS = -Double.MAX_VALUE;
+  private int depth = 1;
   Map rowCol = new HashMap();
 
   public static final int DIM = 8;
@@ -46,6 +47,14 @@ public class Board extends State<Board>{
     }
     values = v;
     evaluate();
+  }
+
+  public void setDepth(int i){
+    depth = i;
+  }
+
+  public int getDepth(){
+    return depth;
   }
 
   public int[][] getBoard(){
@@ -120,10 +129,16 @@ public class Board extends State<Board>{
           }
 
           if(values[i][j] == values[i][j+1]){
-            sum += (values[i][j] * Math.pow(type,2));
+            for(int k=0; k< 1;k++){
+              sum+=(values[i][j+k] *100 *type);
+            }
+            //sum += (values[i][j] * Math.pow(type,2));
           }
           if(values[i][j] == values[i][j+1] && values[i][j] == values[i][j+2]){
-            sum += (values[i][j] * Math.pow(type,3));
+            for(int k=0; k< 2;k++){
+              sum+=(values[i][j+k] *500*type);
+            }
+            // sum += (values[i][j] * Math.pow(type,3));
           }
           /*
           if(values[i][j] == values[i][j+1] || values[i][j] == values[i][j+2] || values[i][j] == values[i][j+3]){
@@ -134,6 +149,7 @@ public class Board extends State<Board>{
       */
     }
   }
+
 }
 //looks for 4 of one type vertically
 for(int j = 0; j < (DIM); j++){
@@ -147,10 +163,16 @@ for(int j = 0; j < (DIM); j++){
       }
 
       if(values[i][j] == values[i+1][j]){
-        sum += (values[i][j] * Math.pow(type,2));
+        for(int k=0; k< 1;k++){
+          sum+=(values[i+k][j] *100*type);
+        }
+        //sum += (values[i][j] * Math.pow(type,2));
       }
       if(values[i][j] == values[i+1][j] && values[i][j] == values[i+2][j]){
-        sum += (values[i][j] * Math.pow(type,3));
+        for(int k=0; k< 2;k++){
+          sum+=(values[i+k][j] *500*type);
+        }
+        //sum += (values[i][j] * Math.pow(type,3));
       }
       /*
       if(values[i][j] == values[i+1][j] || values[i][j] == values[i+2][j] ){
@@ -161,6 +183,9 @@ for(int j = 0; j < (DIM); j++){
   */
 }
 }
+}
+if(depth > 0){
+  sum *= depth;
 }
 evaluationValue = sum;
 }
@@ -186,7 +211,7 @@ protected ArrayList<Board> getChildren(boolean turn){
 
   int[][] temp = copy();
 
-  for(int i =0; i < DIM; i++){
+  for(int i =0;i < DIM; i++){
     for(int j = 0; j < DIM; j++){
       if(temp[i][j] == 0){
         int[][] a = copy();
@@ -202,11 +227,7 @@ protected ArrayList<Board> getChildren(boolean turn){
     }
   }
 
-    Collections.sort(t, new Com());
-
-  if(cv == -1){
-    Collections.reverse(t);
-  }
+  Collections.shuffle(t);
   return t;
 }
 

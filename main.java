@@ -32,7 +32,10 @@ public class main{
     { 0, 0, 0, 0, 0, 0, 0, 0},
     { 0, 0, 0, 0, 0, 0, 0, 0}};
     Board b = new Board(v);
+    //System.out.println(b.getEstimateValue());
     //How much time should AI have per move?
+
+
     System.out.println("\nHow much time should AI have?(s)");
     time = input.nextInt();
 

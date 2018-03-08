@@ -39,9 +39,6 @@ public class ABP{
 
       //if max operation is performed
       if(max){
-
-
-
         //get the current state's children
         ArrayList<Board>children = initial.getChildren(true);
         //the best state that will be found from the children
@@ -53,12 +50,23 @@ public class ABP{
           ABP a = new ABP(c,depth - 1, false);
           //get the aplha beta pruning result of the current state
           Board res = a.run(alpha, beta, endTime);
+          res.setDepth(depth);
           //get the resulting state's utility value
           Double value = res.getUtilityValue();
           //if the resulting state is the better than the saved one ; update best vars
 
 
           if(value > bestVal || bestState == null){
+            bestVal = value;
+            bestState = c;
+          }
+          /*
+          if(value == Board.WIN){
+            System.out.println("WIN DEPTH: "+res.getDepth() + " | "+res.toString());
+          }
+          */
+
+          if(bestVal == Board.WIN && value == Board.WIN && res.getDepth() > bestState.getDepth()){
             bestVal = value;
             bestState = c;
           }
@@ -69,7 +77,7 @@ public class ABP{
            if (beta <= alpha) {
             break;
           }
-          if(System.currentTimeMillis() >= endTime || bestState.getUtilityValue() == Board.WIN){
+          if(System.currentTimeMillis() >= endTime ){
             break;
           }
 
@@ -88,8 +96,18 @@ public class ABP{
 
           ABP a = new ABP(c,depth - 1, true);
           Board res = a.run(alpha, beta, endTime);
+          res.setDepth(depth);
           Double value = res.getUtilityValue();
           if(value < bestVal || bestState == null){
+            bestVal = value;
+            bestState = c;
+          }
+          /*
+          if(value == Board.LOSS){
+            System.out.println("LOSS DEPTH: "+res.getDepth() + " | "+res.toString());
+          }
+          */
+          if(bestVal == Board.LOSS && value == Board.LOSS && res.getDepth() > bestState.getDepth()){
             bestVal = value;
             bestState = c;
           }
@@ -100,7 +118,7 @@ public class ABP{
            if (beta <= alpha) {
              break;
            }
-           if(System.currentTimeMillis() >= endTime || bestState.getUtilityValue() == Board.LOSS){
+           if(System.currentTimeMillis() >= endTime ){
              break;
            }
 
