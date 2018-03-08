@@ -40,6 +40,8 @@ public abstract class State<I extends State>{
   //validates move
   abstract protected boolean validMove(String move);
 
+  abstract protected I getInitialMove();
+
 
   /*gets all children states
   @param turn : indicates whose turn it is; computer or player

@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.*;
+
 public class Board extends State<Board>{
 
   public static final double WIN = Double.MAX_VALUE;
@@ -121,7 +123,7 @@ public class Board extends State<Board>{
             sum += (values[i][j] * Math.pow(type,2));
           }
           if(values[i][j] == values[i][j+1] && values[i][j] == values[i][j+2]){
-            sum += (values[i][j] * Math.pow(type,4));
+            sum += (values[i][j] * Math.pow(type,3));
           }
           /*
           if(values[i][j] == values[i][j+1] || values[i][j] == values[i][j+2] || values[i][j] == values[i][j+3]){
@@ -148,7 +150,7 @@ for(int j = 0; j < (DIM); j++){
         sum += (values[i][j] * Math.pow(type,2));
       }
       if(values[i][j] == values[i+1][j] && values[i][j] == values[i+2][j]){
-        sum += (values[i][j] * Math.pow(type,4));
+        sum += (values[i][j] * Math.pow(type,3));
       }
       /*
       if(values[i][j] == values[i+1][j] || values[i][j] == values[i+2][j] ){
@@ -199,6 +201,12 @@ protected ArrayList<Board> getChildren(boolean turn){
       }
     }
   }
+
+    Collections.sort(t, new Com());
+
+  if(cv == -1){
+    Collections.reverse(t);
+  }
   return t;
 }
 
@@ -248,6 +256,17 @@ public void playerMove(String _move) {
   setMove(m);
   evaluate();
 }
+
+public void updateMove(String _move){
+  int i = (int) rowCol.get(_move.toUpperCase().charAt(0));
+  int j = Character.getNumericValue(_move.charAt(1)) -1;
+  values[i][j] = 1;
+  int[] m = {i,j};
+  setMove(m);
+  evaluate();
+}
+
+
 public boolean validMove(String move){
    int i,j;
    if(rowCol.containsKey(move.toUpperCase().charAt(0))){
@@ -263,7 +282,42 @@ public String printMove(){
     char[] row = {'A','B','C','D','E','F','G','H'};
     int j = move[1] +1;
     return row[move[0]] + ","+j;
+}
+
+public Board getInitialMove(){
+  Board fin = null;
+  String[] pm = {"d4","d5","d6","e4","e5","e6"};
+  for(String s : pm){
+    if(validMove(s)){
+      Board t = new Board(copy());
+      t.updateMove(s);
+      if(fin == null || t.getEstimateValue() > fin.getEstimateValue()){
+        fin = t;
+      }
+    }
   }
+
+  return fin;
+}
+
+class Com implements Comparator<State> {
+
+
+	//compare object needed for the PriorityQueue
+	@Override
+	public int compare(State p0, State p1) {
+		if(p0.getEstimateValue() < p1.getEstimateValue()){
+			return -1;
+		}
+    else if(p0.getEstimateValue() > p1.getEstimateValue()){
+		    return 1;
+    }
+    return 0;
+	}
+
+}
+
+
 
 
 }

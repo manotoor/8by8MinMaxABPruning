@@ -5,6 +5,7 @@ public class main{
 
     //Who is going , AI or player?
     boolean playerTurn = false;
+    boolean firstTurn = true;
     //Time in Seconds
     int time = 0;
     //input, and player move variables
@@ -35,11 +36,10 @@ public class main{
     System.out.println("\nHow much time should AI have?(s)");
     time = input.nextInt();
 
-    b.printBoard();
 
     while(!b.isFinishedState()){
 		  //If player is first
-		  if(player.toLowerCase().charAt(0) == 'y' || playerTurn){
+		  if( playerTurn){
 			  System.out.print("\nPlease enter a move: ");
 			  _move = input.next();
            if(b.validMove(_move)){
@@ -53,13 +53,21 @@ public class main{
            }
 			  b.printBoard();
 		  }
+      if(firstTurn){
+        b = b.getInitialMove();
+        b.printBoard();
+        System.out.println("My move is:  " + b.printMove());
+        firstTurn = false;
+        playerTurn = true;
+      }else{
         ABP a = new ABP(b,10,true);
         Board res = a.initialRun(time);
-		  int[] move = res.getMove();
+		    int[] move = res.getMove();
         b = res;
   		  b.printBoard();
         System.out.println("My move is:  " + b.printMove());
-  		  playerTurn = true;
+
+      }
 	  }
 	  b.printBoard();
     System.out.println("Game is done");

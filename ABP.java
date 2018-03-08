@@ -45,9 +45,8 @@ public class ABP{
         //get the current state's children
         ArrayList<Board>children = initial.getChildren(true);
         //the best state that will be found from the children
-        Board bestState = children.get(0);
-        double bestVal = bestState.getEstimateValue();
-        children.remove(0);
+        Board bestState = null;
+        double bestVal = Double.MAX_VALUE;
         for(Board c : children){
 
           //set up the alpha beta pruning for the current state
@@ -59,7 +58,7 @@ public class ABP{
           //if the resulting state is the better than the saved one ; update best vars
 
 
-          if(value > bestVal){
+          if(value > bestVal || bestState == null){
             bestVal = value;
             bestState = c;
           }
@@ -83,15 +82,14 @@ public class ABP{
       else{
         ArrayList<Board>children = initial.getChildren(false);
         //the best state that will be found from the children
-        Board bestState = children.get(0);
-        double bestVal = bestState.getEstimateValue();
-        children.remove(0);
+        Board bestState = null;
+        double bestVal = Double.MAX_VALUE;
         for(Board c : children){
 
           ABP a = new ABP(c,depth - 1, true);
           Board res = a.run(alpha, beta, endTime);
           Double value = res.getUtilityValue();
-          if(value < bestVal){
+          if(value < bestVal || bestState == null){
             bestVal = value;
             bestState = c;
           }
